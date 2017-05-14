@@ -1,0 +1,1 @@
+A NodeJS WebApp maintaining books and authors in a Mongdb instance.
