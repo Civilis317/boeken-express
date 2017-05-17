@@ -1,0 +1,34 @@
+[{
+	"_id": "5905db9b995330171c866f65",
+	"titel": "The Histories",
+	"auteur": "Herodotus",
+	"ISBN": "xx-sfdsfjjj",
+	"__v": 0,
+	"date": "2017-04-30T12:42:03.663Z"
+},
+{
+	"_id": "5905dde9cda57d225cdd26c8",
+	"titel": "NodeJS",
+	"auteur": "Peter Kassenaar",
+	"ISBN": "978-90-5940-837-1",
+	"__v": 0,
+	"date": "2017-04-30T12:51:53.993Z"
+},
+{
+	"titel": "Mecklenburg-Vorpommern",
+	"auteur": "Tineke Zwijgers",
+	"ISBN": "978-90-215-5634-5"
+},
+{
+	"titel": "Kopenhagen",
+	"auteur": "ANWB",
+	"ISBN": "000-00-00-0000-0"
+},
+{
+	"_id": "5905de61cda57d225cdd26c9",
+	"titel": "Ringworld",
+	"auteur": "Larry Niven",
+	"ISBN": "675-41-5637-984-3",
+	"__v": 0,
+	"date": "2017-04-30T12:53:53.982Z"
+}]

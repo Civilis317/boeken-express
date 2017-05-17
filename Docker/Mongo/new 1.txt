@@ -1,0 +1,2 @@
+mongoimport --db boeken --collection boeks --file ./books.json --jsonArray
+mongoimport --db boeken --collection auteurs --file ./auteurs.json --jsonArray
