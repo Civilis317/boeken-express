@@ -63,7 +63,7 @@
 		function auteurController($http, $timeout) {
 			// 0. Initialisaties
 			var vm = this,
-					url = 'http://localhost:3000/api/auteurs';
+					url = 'http://newgrange:3010/api/auteurs';
 			vm.formVisible = false;
 			vm.result = '';
 
@@ -74,7 +74,7 @@
 			}).then(function (auteurs) {
 				vm.auteurs = auteurs.data;
 			}).catch(function (err) {
-				alert('Error: er is een fout opgetreden ' + err);
+				alert(url + 'Error: er is een fout opgetreden ' + JSON.stringify(err));
 			});
 
 			// 2. Formulier zichtbaar maken

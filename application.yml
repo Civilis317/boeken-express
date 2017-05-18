@@ -1,5 +1,5 @@
 mongodb:
-    host: newgrange
+    host: mongo-dev
     port: 27017
     db: boeken
 

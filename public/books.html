@@ -63,7 +63,7 @@
 		function boekController($http, $timeout) {
 			// 0. Initialisaties
 			var vm = this,
-					url = 'http://localhost:3000/api/boeken';
+					url = 'http://localhost:3010/api/boeken';
 			vm.formVisible = false;
 			vm.result = '';
 
@@ -74,7 +74,7 @@
 			}).then(function (boeken) {
 				vm.boeken = boeken.data;
 			}).catch(function (err) {
-				alert('Error: er is een fout opgetreden ' + err);
+				alert(url + 'Error: er is een fout opgetreden ' + JSON.stringify(err));
 			});
 
 			// 2. Formulier zichtbaar maken
