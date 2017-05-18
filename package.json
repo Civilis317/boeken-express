@@ -1,16 +1,17 @@
 {
-  "name": "0601",
+  "name": "Boeken-Express",
   "version": "1.0.0",
-  "description": "test installatie mongoose",
+  "description": "MEAN app",
+  "author" : "Lie Zeilstra <lie.zeilstra@acme.com>",
   "main": "server.js",
   "scripts": {
+    "start" : "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
     "test",
     "mongoose"
   ],
-  "author": "Peter Kassenaar",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.13.2",
