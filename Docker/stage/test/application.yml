@@ -1,0 +1,5 @@
+mongodb:
+    host: mongo-test
+    port: 27117
+    db: boeken
+

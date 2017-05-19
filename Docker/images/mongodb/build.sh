@@ -1,18 +1,8 @@
 #!/usr/bin/env bash
 
-rm -rf ./tmp
-mkdir ./tmp
-
-cp -r ../../models ./tmp/models
-cp -r ../../public ./tmp/public
-cp ../../db.js ./tmp/
-cp ../../server.js ./tmp/
-cp ../../application.yml ./tmp/
-cp ../../package.json ./tmp/
-
 set -o pipefail
 
-IMAGE_NAME=civilis/nodejs-server
+IMAGE_NAME=civilis/mongo-image
 
 TAG_NAME=192.168.99.100:6000/${IMAGE_NAME}
 

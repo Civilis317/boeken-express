@@ -1,0 +1,30 @@
+version: "2"
+services:
+  webapp:
+    image: 192.168.99.100:6000/civilis/nodejs-server:latest
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+    ports:
+      - "3010:3000"
+    volumes:
+      - ./application.yml:/usr/src/app/application.yml
+    networks:
+      mean-network:
+        aliases:
+          - boeken-express-dev
+  mongodb:
+    image: 192.168.99.100:6000/civilis/mongo-image:latest
+    #hostname: mongo-dev
+    ports:
+      - "27017:27017"
+    volumes:
+      - /system/Lib/mongodb/data:/data/db
+    networks:
+      mean-network:
+        aliases:
+          - mongo-dev
+
+networks:
+  mean-network:

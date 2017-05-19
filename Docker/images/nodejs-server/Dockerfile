@@ -9,7 +9,7 @@ COPY ./tmp/models /usr/src/app/models
 COPY ./tmp/public /usr/src/app/public
 COPY ./tmp/db.js /usr/src/app/
 COPY ./tmp/server.js /usr/src/app/
-COPY ./tmp/application.yml /usr/src/app/
+#COPY ./tmp/application.yml /usr/src/app/
 
 # Install app dependencies
 COPY ./tmp/package.json /usr/src/app/

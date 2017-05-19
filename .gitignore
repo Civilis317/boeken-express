@@ -1,4 +1,6 @@
 node_modules
 .classpath
 .project
-
+Docker/images/nodejs-server/tmp
+Docker/images/nodejs-server/build.log
+Docker/images/mongodb/build.log
