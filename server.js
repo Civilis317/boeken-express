@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 // 0. Middleware: statische website serveren
-app.use("/boeken-express", express.static(__dirname + '/public'));
+app.use("/", express.static(__dirname + '/public'));
 
 // 1. Eenvoudige instructie
 app.get('/api', function (req, res) {
