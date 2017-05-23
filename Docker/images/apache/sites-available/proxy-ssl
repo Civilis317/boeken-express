@@ -1,10 +1,7 @@
 <IfModule mod_ssl.c>
 	<VirtualHost _default_:443>
-		ServerAdmin webmaster@localhost
-        ServerName newgrange:9443
-
-		#DocumentRoot /var/www/proxy-ssl
-
+        ServerName boeken-dev
+		ServerAdmin civilis@acme.com
 
 		ErrorLog ${APACHE_LOG_DIR}/error.log
 		CustomLog ${APACHE_LOG_DIR}/access.log combined
@@ -28,8 +25,8 @@
 		BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
 
         ProxyPreserveHost On
-        ProxyPass /boeken-express/ http://boeken-express-dev:3000/boeken-express/
-        ProxyPassReverse /boeken-express/ http://boeken-express-dev:3000/boeken-express/
+        ProxyPass / http://boeken-express-dev:3000
+        ProxyPassReverse / http://boeken-express-dev:3000
 
 	</VirtualHost>
 </IfModule>
