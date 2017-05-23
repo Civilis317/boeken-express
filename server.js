@@ -4,6 +4,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var Boek = require('./models/boeken');
 var Auteur = require('./models/auteurs');
+var http = require('http');
 
 var app = express();
 
@@ -14,7 +15,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 // 0. Middleware: statische website serveren
-app.use(express.static(__dirname + '/public'));
+app.use("/boeken-express", express.static(__dirname + '/public'));
 
 // 1. Eenvoudige instructie
 app.get('/api', function (req, res) {
@@ -69,6 +70,7 @@ app.delete('/api/boeken/:id', function (req, res, next) {
 		res.status(200).json(removed);
 	})
 });
+
 
 // 5. Server sarten.
 app.listen(3000, function () {
