@@ -2,11 +2,11 @@ Sending build context to Docker daemon 12.29 kB
 Step 1 : FROM debian:jessie
  ---> 73e72bf822ca
 Step 2 : MAINTAINER David Caron <david.caron@trifork.nl>
- ---> Running in 6650b69f2f7a
- ---> 09abf91b9f4d
-Removing intermediate container 6650b69f2f7a
+ ---> Running in e766ecc76b36
+ ---> 8262daa22684
+Removing intermediate container e766ecc76b36
 Step 3 : RUN apt-get update && apt-get install -y apache2 && apt-get clean
- ---> Running in 23d89dbc3665
+ ---> Running in c38aa0b13611
 Get:1 http://security.debian.org jessie/updates InRelease [63.1 kB]
 Get:2 http://security.debian.org jessie/updates/main amd64 Packages [513 kB]
 Ign http://deb.debian.org jessie InRelease
@@ -15,7 +15,7 @@ Get:4 http://deb.debian.org jessie Release.gpg [2373 B]
 Get:5 http://deb.debian.org jessie Release [148 kB]
 Get:6 http://deb.debian.org jessie-updates/main amd64 Packages [17.6 kB]
 Get:7 http://deb.debian.org jessie/main amd64 Packages [9065 kB]
-Fetched 9954 kB in 2s (3426 kB/s)
+Fetched 9954 kB in 4s (2000 kB/s)
 Reading package lists...
 Reading package lists...
 Building dependency tree...
@@ -126,7 +126,7 @@ Get:60 http://deb.debian.org/debian/ jessie/main rename all 0.20-3 [12.4 kB]
 Get:61 http://deb.debian.org/debian/ jessie/main ssl-cert all 1.0.35 [20.9 kB]
 Get:62 http://deb.debian.org/debian/ jessie/main xml-core all 0.13+nmu2 [24.2 kB]
 [91mdebconf: delaying package configuration, since apt-utils is not installed
-[0mFetched 13.9 MB in 2s (4935 kB/s)
+[0mFetched 13.9 MB in 14s (954 kB/s)
 Selecting previously unselected package libgdbm3:amd64.
 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 7550 files and directories currently installed.)
 Preparing to unpack .../libgdbm3_1.8.3-13.1_amd64.deb ...
@@ -418,14 +418,14 @@ Setting up xml-core (0.13+nmu2) ...
 Processing triggers for libc-bin (2.19-18+deb8u6) ...
 Processing triggers for systemd (215-17+deb8u5) ...
 Processing triggers for sgml-base (1.26+nmu4) ...
- ---> dcd10ff7ba40
-Removing intermediate container 23d89dbc3665
+ ---> 73ab83a5f626
+Removing intermediate container c38aa0b13611
 Step 4 : ENV APACHE_LOG_DIR /var/log/apache2
- ---> Running in 89a64e9258c7
- ---> 100a1512447e
-Removing intermediate container 89a64e9258c7
+ ---> Running in a681a77c5f9f
+ ---> 5823a625636d
+Removing intermediate container a681a77c5f9f
 Step 5 : RUN a2enmod proxy && a2enmod proxy_http && a2enmod headers && a2enmod ssl
- ---> Running in 5417b2519560
+ ---> Running in 7c049694618a
 Enabling module proxy.
 To activate the new configuration, you need to run:
   service apache2 restart
@@ -447,42 +447,42 @@ Enabling module ssl.
 See /usr/share/doc/apache2/README.Debian.gz on how to configure SSL and create self-signed certificates.
 To activate the new configuration, you need to run:
   service apache2 restart
- ---> c355933c7251
-Removing intermediate container 5417b2519560
+ ---> 271901b94837
+Removing intermediate container 7c049694618a
 Step 6 : RUN mkdir /etc/apache2/ssl
- ---> Running in 3b09d5679a3e
- ---> 27cfc18e45d7
-Removing intermediate container 3b09d5679a3e
+ ---> Running in 6a9feb327785
+ ---> a836ec42a340
+Removing intermediate container 6a9feb327785
 Step 7 : ADD ssl /etc/apache2/ssl
- ---> eafe2d34212a
-Removing intermediate container 72b51b2db947
+ ---> 2d18f9777d0f
+Removing intermediate container 296def9e68bf
 Step 8 : ADD sites-available/proxy-ssl /etc/apache2/sites-available/proxy-ssl.conf
- ---> e604883b006b
-Removing intermediate container 2ae3ef9885fa
+ ---> 082d2ffd9da0
+Removing intermediate container ff5f79310b93
 Step 9 : RUN rm /etc/apache2/sites-enabled/*
- ---> Running in 47944caa35c3
- ---> 73720fec547e
-Removing intermediate container 47944caa35c3
+ ---> Running in f076cacca0f1
+ ---> 7efe0617d235
+Removing intermediate container f076cacca0f1
 Step 10 : RUN a2ensite proxy-ssl
- ---> Running in d01931d6e9d9
+ ---> Running in b394d5a519fa
 Enabling site proxy-ssl.
 To activate the new configuration, you need to run:
   service apache2 reload
- ---> 08a695f2bbdc
-Removing intermediate container d01931d6e9d9
+ ---> d1700cd7b5e4
+Removing intermediate container b394d5a519fa
 Step 11 : ADD entrypoint.sh /tmp/entrypoint.sh
- ---> 3bbcd2a14195
-Removing intermediate container 44a68c71277f
+ ---> 2f805e72232c
+Removing intermediate container 5379939c96d5
 Step 12 : RUN chmod +x /tmp/entrypoint.sh
- ---> Running in 92866c761fb3
- ---> 9471793b6bb9
-Removing intermediate container 92866c761fb3
+ ---> Running in 22b8fe19b109
+ ---> 1fabb1caf9cf
+Removing intermediate container 22b8fe19b109
 Step 13 : EXPOSE 443
- ---> Running in f644afc20031
- ---> 41b706650a46
-Removing intermediate container f644afc20031
+ ---> Running in 33eb467ddf17
+ ---> b2ce3da06982
+Removing intermediate container 33eb467ddf17
 Step 14 : ENTRYPOINT /tmp/entrypoint.sh
- ---> Running in 986ce2ac3a1c
- ---> 9df369ce9a61
-Removing intermediate container 986ce2ac3a1c
-Successfully built 9df369ce9a61
+ ---> Running in 77756fa0336c
+ ---> 5147a281a61f
+Removing intermediate container 77756fa0336c
+Successfully built 5147a281a61f

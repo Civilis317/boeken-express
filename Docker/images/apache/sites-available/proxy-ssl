@@ -28,8 +28,8 @@
 		BrowserMatch "MSIE [17-9]" ssl-unclean-shutdown
 
         ProxyPreserveHost On
-        ProxyPass /boeken-express http://boeken-express-dev:3000/
-        ProxyPassReverse /boeken-express http://boeken-express-dev:3000/
+        ProxyPass /boeken-express/ http://boeken-express-dev:3000/boeken-express/
+        ProxyPassReverse /boeken-express/ http://boeken-express-dev:3000/boeken-express/
 
 	</VirtualHost>
 </IfModule>
