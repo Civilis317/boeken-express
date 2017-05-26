@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var Boek = require('./models/boeken');
 var Auteur = require('./models/auteurs');
 var http = require('http');
+var readYaml = require('read-yaml');
 
 var app = express();
 
@@ -16,6 +17,15 @@ app.use(bodyParser.urlencoded({
 
 // 0. Middleware: statische website serveren
 app.use("/", express.static(__dirname + '/public'));
+
+
+var config = readYaml.sync('application.yml');
+var version = config.application.version;
+
+app.get("/version", function(request, response) {
+	response.json(version);
+});
+
 
 // 1. Eenvoudige instructie
 app.get('/api', function (req, res) {
@@ -71,8 +81,8 @@ app.delete('/api/boeken/:id', function (req, res, next) {
 	})
 });
 
-
 // 5. Server sarten.
 app.listen(3000, function () {
 	console.log('server gestart op poort 3000');
+	console.log('version: ' + version);
 });

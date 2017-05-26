@@ -4,16 +4,59 @@
 	<meta charset="UTF-8">
 	<title>Boeken Express</title>
 	<link rel="stylesheet" href="js/lib/bootstrap/dist/css/bootstrap.min.css"/>
+	<style type="text/css">
+	#footerDiv {
+		position: fixed;
+		bottom: 0;
+	}
+	</style>
+
 </head>
-<body>
-<div class="container">
+<body ng-app="myApp">
+<div class="container" ng-controller="indexController as vm">
 	<h1>De Boeken Express</h1>
 	<p>
 		<a href="/books.html" class="btn btn-lg btn-primary">Boeken</a>
 		<a href="/authors.html" class="btn btn-lg btn-primary">Auteurs</a>
 		
 	</p>
+	
+	<div id="footerDiv" ><span>Boeken Express, v. {{vm.version}}</span></div>
+	
 </div>
 
+
+<!-- HIER: alles Quick & Dirty in één bestand geplaatst: in werkelijkheid
+	dit liever modulair opzetten met meerdere .js-bestanden -->
+<script src="js/lib/angular/angular.min.js"></script>
+<script>
+	(function () {
+		'use strict';
+
+		angular.module('myApp', [])
+				.controller('indexController', indexController);
+
+		indexController.$inject = ['$http', '$timeout']; // minify safe
+		function indexController($http, $timeout) {
+			// 0. Initialisaties
+			var vm = this,
+					url = '../version';
+			vm.formVisible = false;
+			vm.result = '';
+
+			// 1. Version ophalen.
+			$http({
+				method: 'get',
+				url   : url
+			}).then(function (version) {
+				vm.version = version.data;
+			}).catch(function (err) {
+				alert(url + 'Error: er is een fout opgetreden ' + JSON.stringify(err));
+			});
+
+
+		}
+	})();
+</script>
 </body>
 </html>

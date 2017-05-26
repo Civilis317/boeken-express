@@ -4,6 +4,12 @@
 	<meta charset="UTF-8">
 	<title>Boeken Express</title>
 	<link rel="stylesheet" href="js/lib/bootstrap/dist/css/bootstrap.min.css"/>
+	<style type="text/css">
+	#footerDiv {
+		position: fixed;
+		bottom: 0;
+	}
+	</style>
 	
 </head>
 <body ng-app="myApp">
@@ -49,6 +55,8 @@
 		<button class="btn btn-lg btn-primary btn-block" ng-click="vm.addBook()">Toevoegen</button>
 
 	</div>
+	
+	<div id="footerDiv" ><span>Boeken Express, v. {{vm.version}}</span></div>
 </div>
 <!-- HIER: alles Quick & Dirty in één bestand geplaatst: in werkelijkheid
 	dit liever modulair opzetten met meerdere .js-bestanden -->
@@ -67,6 +75,16 @@
 					url = '../api/boeken';
 			vm.formVisible = false;
 			vm.result = '';
+
+			// 0. Version ophalen.
+			$http({
+				method: 'get',
+				url   : '../version'
+			}).then(function (version) {
+				vm.version = version.data;
+			}).catch(function (err) {
+				alert(url + 'Error: er is een fout opgetreden ' + JSON.stringify(err));
+			});
 
 			// 1. Boeken ophalen.
 			$http({

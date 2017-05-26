@@ -1,3 +1,6 @@
+application:
+    version: 1.0
+    
 mongodb:
     host: mongo-test
     port: 27117

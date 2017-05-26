@@ -1,4 +1,7 @@
-mongodb:
+application:
+    version: 1.0
+    
+ mongodb:
     host: mongo-dev
     port: 27017
     db: boeken
