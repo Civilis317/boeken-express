@@ -1,0 +1,10 @@
+# docker build properties
+docker:
+  registry:
+    host: 192.168.99.100
+    port: 6000
+
+image:
+  name: civilis/apache-jessie
+  version: 1.0
+  

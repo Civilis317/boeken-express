@@ -4,3 +4,4 @@ node_modules
 Docker/images/nodejs-server/tmp
 Docker/images/nodejs-server/build.log
 Docker/images/mongodb/build.log
+Docker/images/apache/build.log
