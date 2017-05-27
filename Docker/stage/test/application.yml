@@ -3,6 +3,6 @@ application:
     
 mongodb:
     host: mongo-test
-    port: 27117
+    port: 27017
     db: boeken
 

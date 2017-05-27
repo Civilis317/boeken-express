@@ -1,7 +1,21 @@
 version: "2"
 services:
+  apache:
+    image: 192.168.99.100:6000/civilis/apache-jessie:latest
+    container_name: apache-proxy
+    links:
+      - webapp
+    ports:
+      - "9443:443"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    networks:
+      mean-network:
+        aliases:
+          - apache-proxy
   webapp:
     image: 192.168.99.100:6000/civilis/nodejs-server:latest
+    container_name: boeken-express-test
     links:
       - mongodb
     depends_on:
@@ -13,12 +27,12 @@ services:
     networks:
       mean-network:
         aliases:
-          - boeken-express-dev
+          - boeken-express-test
   mongodb:
     image: 192.168.99.100:6000/civilis/mongo-image:latest
-    #hostname: mongo-dev
+    container_name: mongo-test
     ports:
-      - "27117:27017"
+      - "27217:27017"
     volumes:
       - /system/Lib/mongodb/test/data:/data/db
     networks:
