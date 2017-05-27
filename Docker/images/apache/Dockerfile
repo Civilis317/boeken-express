@@ -1,5 +1,5 @@
 FROM debian:jessie
-MAINTAINER David Caron <david.caron@trifork.nl>
+MAINTAINER Civilis <civilis@acme.com>
 
 RUN apt-get update && apt-get install -y apache2 && apt-get clean
 
@@ -19,7 +19,5 @@ RUN chmod +x /tmp/entrypoint.sh
 
 EXPOSE 443
 
-#ENTRYPOINT ["/usr/sbin/apache2ctl"]
-#CMD ["-D", "FOREGROUND"]
 ENTRYPOINT ["/tmp/entrypoint.sh"]
 

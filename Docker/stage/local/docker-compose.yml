@@ -3,8 +3,6 @@ services:
   apache:
     image: 192.168.99.100:6000/civilis/apache-jessie:latest
     container_name: apache-proxy
-    links:
-      - webapp
     ports:
       - "9443:443"
     volumes:
@@ -16,12 +14,10 @@ services:
   webapp:
     image: 192.168.99.100:6000/civilis/nodejs-server:latest
     container_name: boeken-express-dev
-    links:
-      - mongodb
     depends_on:
       - mongodb
-    ports:
-      - "3010:3000"
+    expose:
+      - "3000"
     volumes:
       - ./application.yml:/usr/src/app/application.yml
     networks:

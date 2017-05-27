@@ -1,0 +1,12 @@
+version: "2"
+services:
+  apache:
+    image: 192.168.99.100:6000/civilis/apache-jessie:latest
+    container_name: apache-proxy
+    ports:
+      - "9443:443"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+
+networks:
+  mean-network:
