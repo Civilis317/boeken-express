@@ -1,16 +1,14 @@
 version: "2"
 services:
-  apache:
-    image: 192.168.99.100:6000/civilis/apache-jessie:latest
-    container_name: apache-proxy
+
+  mongodb:
+    image: 192.168.99.100:6000/civilis/mongo-image:latest
+    container_name: mongo-dev
     ports:
-      - "9443:443"
+      - "27017:27017"
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-    networks:
-      mean-network:
-        aliases:
-          - apache-proxy
+      - /system/Lib/mongodb/data:/data/db
+
   webapp:
     image: 192.168.99.100:6000/civilis/nodejs-server:latest
     container_name: boeken-express-dev
@@ -20,21 +18,8 @@ services:
       - "3000"
     volumes:
       - ./application.yml:/usr/src/app/application.yml
-    networks:
-      mean-network:
-        aliases:
-          - boeken-express-dev
-  mongodb:
-    image: 192.168.99.100:6000/civilis/mongo-image:latest
-    container_name: mongo-dev
-    ports:
-      - "27017:27017"
-    volumes:
-      - /system/Lib/mongodb/data:/data/db
-    networks:
-      mean-network:
-        aliases:
-          - mongo-dev
 
 networks:
-  mean-network:
+  default:
+    external:
+      name: apacheproxy_boeken-express-network

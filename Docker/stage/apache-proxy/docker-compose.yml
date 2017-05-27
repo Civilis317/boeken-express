@@ -7,6 +7,8 @@ services:
       - "9443:443"
     volumes:
       - /etc/localtime:/etc/localtime:ro
+    networks:
+      - boeken-express-network
 
 networks:
-  mean-network:
+  boeken-express-network:
