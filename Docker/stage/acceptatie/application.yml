@@ -1,0 +1,8 @@
+application:
+    version: "1.0"
+    
+mongodb:
+    host: mongo-acc
+    port: 27017
+    db: boeken
+

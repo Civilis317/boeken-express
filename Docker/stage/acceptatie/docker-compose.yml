@@ -1,0 +1,25 @@
+version: "2"
+services:
+
+  mongodb:
+    image: 192.168.99.100:6000/civilis/mongo-image:latest
+    container_name: mongo-acc
+    ports:
+      - "27017:27017"
+    volumes:
+      - /system/Lib/mongodb/acc/data:/data/db
+
+  webapp:
+    image: 192.168.99.100:6000/civilis/nodejs-server:latest
+    container_name: boeken-express-acc
+    depends_on:
+      - mongodb
+    expose:
+      - "3000"
+    volumes:
+      - ./application.yml:/usr/src/app/application.yml
+
+networks:
+  default:
+    external:
+      name: apacheproxy_boeken-express-network
