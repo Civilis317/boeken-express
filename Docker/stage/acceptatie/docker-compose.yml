@@ -5,7 +5,7 @@ services:
     image: 192.168.99.100:6000/civilis/mongo-image:latest
     container_name: mongo-acc
     ports:
-      - "27017:27017"
+      - "27317:27017"
     volumes:
       - /system/Lib/mongodb/acc/data:/data/db
 
