@@ -20,7 +20,8 @@ var port = config.mongodb.port;
 var database = config.mongodb.db;
   
 //Build the connection string 
-var dbURI = 'mongodb://' + host + ':' + port + '/' + database
+//var dbURI = 'mongodb://' + host + ':' + port + '/' + database
+var dbURI = 'mongodb://heroku_r250g6l4:m8m9pfp39aklpnskhbua06l7n1@ds155191.mlab.com:55191/heroku_r250g6l4';
   
 //var dbURI = 'mongodb://localhost/boeken'; 
 //var dbURI = 'mongodb://newgrange:27017/boeken'; 
