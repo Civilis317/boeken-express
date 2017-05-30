@@ -1,0 +1,10 @@
+application:
+    version: "1.2"
+    
+mongodb:
+    username: heroku_r250g6l4
+    password: m8m9pfp39aklpnskhbua06l7n1
+    host: ds155191.mlab.com
+    port: 55191
+    db: heroku_r250g6l4
+

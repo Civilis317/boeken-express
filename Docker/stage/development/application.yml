@@ -2,7 +2,7 @@ application:
     version: "1.2"
     
 mongodb:
-    host: localhost
+    host: mongo-dev
     port: 27017
     db: boeken
 

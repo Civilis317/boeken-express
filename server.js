@@ -10,16 +10,21 @@ var readYaml = require('read-yaml');
 var app = express();
 
 // 0. Middleware: JSON & form-data verwerken in body van request
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
 
+// set defaultport to 5000 for use on heroku
+app.set('port', (process.env.PORT || 5000));
+app.set('config', (process.env.CONFIG_PATH || 'application.yml'));
+
 // 0. Middleware: statische website serveren
 app.use("/", express.static(__dirname + '/public'));
 
 
-var config = readYaml.sync('application.yml');
+var config = readYaml.sync(app.get('config'));
 var version = config.application.version;
 
 app.get("/version", function(request, response) {
@@ -82,7 +87,8 @@ app.delete('/api/boeken/:id', function (req, res, next) {
 });
 
 // 5. Server sarten.
-app.listen(3000, function () {
-	console.log('server gestart op poort 3000');
+app.listen(app.get('port'), function () {
+	console.log('NodeJS Server started and listening at port: ' + app.get('port'));
 	console.log('version: ' + version);
+	//console.log(process.env)
 });
