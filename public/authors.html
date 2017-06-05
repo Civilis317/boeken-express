@@ -125,14 +125,14 @@
 			};
 
 			// 4. Auteur verwijderen
-			vm.deleteBook = function (auteur) {
+			vm.deleteAuteur = function (auteur) {
 				if (confirm(auteur.achternaam + ' wordt verwijderd. Weet u het zeker?')) {
 					$http({
 						method: 'delete',
-						url   : url + '/' + auteur._id
+						url   : '../api/auteurs/' + auteur._id
 					}).then(function (removed) {
 						vm.auteurs.forEach(function(huidigeAuteur, index){
-							if(huidigeAuteur._id === book._id){
+							if(huidigeAuteur._id === auteur._id){
 								vm.auteurs.splice(index, 1);
 							}
 						});
