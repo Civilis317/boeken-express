@@ -6,5 +6,5 @@ docker:
 
 image:
   name: civilis/nodejs-server
-  version: 1.0
+  version: 1.2.1
   

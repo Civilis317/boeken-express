@@ -42,16 +42,15 @@
 		<h3>{{ vm.result }}</h3>
 
 		<h2>Auteur toevoegen</h2>
-		<label for="titel">Titel</label>
-		<input type="text" ng-model="vm.titel" id="titel" name="titel" class="form-control" placeholder="Titel" required
-			   autofocus>
-
-		<label for="auteur">Auteur</label>
-		<input type="text" ng-model="vm.auteur" id="auteur" name="auteur" class="form-control" placeholder="Auteur"
-			   required>
-		<label for="isbn">ISBN</label>
-		<input type="text" ng-model="vm.isbn" id="isbn" name="isbn" class="form-control" placeholder="ISBN" required>
-		<button class="btn btn-lg btn-primary btn-block" ng-click="vm.addBook()">Toevoegen</button>
+		<label for="achternaam">Achternaam</label>
+		<input type="text" ng-model="vm.achternaam" id="achternaam" name="achternaam" class="form-control" placeholder="Achternaam" required autofocus>
+		<label for="voornaam">Voornaam</label>
+		<input type="text" ng-model="vm.voornaam" id="voornaam" name="voornaam" class="form-control" placeholder="Voornaam">
+		<label for="tussenvoegsel">Tussenvoegsel</label>
+		<input type="text" ng-model="vm.tussenvoegsel" id="tussenvoegsel" name="tussenvoegsel" class="form-control" placeholder="Tussenvoegsel">
+		<label for="specialiteit">Specialiteit</label>
+		<input type="text" ng-model="vm.specialiteit" id="specialiteit" name="specialiteit" class="form-control" placeholder="Specialiteit" required>
+		<button class="btn btn-lg btn-primary btn-block" ng-click="vm.addAuteur()">Toevoegen</button>
 
 	</div>
 	
@@ -104,7 +103,7 @@
 			vm.addAuteur = function () {
 				$http({
 					method: 'post',
-					url   : url,
+					url   : '../api/auteurs',
 					data  : {
 						achternaam : vm.achternaam,
 						voornaam: vm.voornaam,

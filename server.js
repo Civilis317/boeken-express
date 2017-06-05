@@ -37,7 +37,7 @@ app.get('/api', function (req, res) {
 	res.json({'Gebruik': 'voer een GET of POST-call uit naar /boeken'})
 });
 
-// 2. POST-endpoint: nieuw boek in de database plaatsen.
+//2. POST-endpoint: nieuw boek in de database plaatsen.
 app.post('/api/boeken', function (req, res, next) {
 	// 2a. nieuw boekobject maken.
 	var boek = new Boek({
@@ -66,13 +66,33 @@ app.get('/api/boeken', function (req, res, next) {
 	})
 });
 
-//3. GET-endpoint: return json array of auteur documents.
+//3a. GET-endpoint: return json array of auteur documents.
 app.get('/api/auteurs', function (req, res, next) {
 	Auteur.find(function (err, auteurs) {
 		if (err) {
 			return next(err);
 		}
 		res.json(auteurs);
+	})
+});
+
+//3b. POST-endpoint: nieuwe auteur in de database plaatsen.
+app.post('/api/auteurs', function (req, res, next) {
+	// 2a. nieuw auteurobject maken.
+	var auteur = new Auteur({
+		achternaam : req.body.achternaam,
+		voornaam: req.body.voornaam,
+		tussenvoegsel  : req.body.tussenvoegsel,
+		specialiteit  : req.body.specialiteit
+	});
+	// 2b. Opslaan in database.
+	auteur.save(function (err, auteur) {
+		// indien error: teruggeven
+		if (err) {
+			return next(err);
+		}
+		// indien OK: status 201 (Created) en auteurobject teruggeven
+		res.status(201).json(auteur);
 	})
 });
 
