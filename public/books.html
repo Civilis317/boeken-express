@@ -1,148 +1,39 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-	<meta charset="UTF-8">
-	<title>Boeken Express</title>
-	<link rel="stylesheet" href="js/lib/bootstrap/dist/css/bootstrap.min.css"/>
-	<style type="text/css">
-	#footerDiv {
-		position: fixed;
-		bottom: 0;
-	}
-	</style>
-	
-</head>
-<body ng-app="myApp">
-<div class="container" ng-controller="boekController as vm">
-	<h1>De Boeken Express - Boeken</h1>
-	
-	<a href="/">Home</a>
+    <div ng-include src="'genericPageTitle.html'"></div>
 
 	<table class="table table-striped">
 		<tr>
-			<th>Titel</th>
-			<th>auteur</th>
+			<th>Title</th>
+			<th>Author</th>
 			<th>ISBN</th>
-			<th></th>
+			<th>&nbsp;</th>
 		</tr>
-		<tr ng-repeat="boek in vm.boeken">
-			<td>{{boek.titel}}</td>
-			<td>{{boek.auteur}}</td>
-			<td>{{boek.ISBN}}</td>
+		<tr ng-repeat="book in data">
+			<td>{{book.titel}}</td>
+			<td>{{book.auteur}}</td>
+			<td>{{book.ISBN}}</td>
 			<td>
-				<button ng-click="vm.deleteBook(boek)" class="btn btn-danger">Verwijderen</button>
+				<button ng-click="deleteObject(book)" class="btn btn-danger">Delete</button>
 			</td>
 		</tr>
 	</table>
 	<p>
-		<button ng-click="vm.showForm()" class="btn btn-lg btn-primary">Boek toevoegen</button>
+		<button ng-click="showForm()" class="btn btn-md btn-success">Add Book</button>
 	</p>
 	<!-- formulier voor toevoegen van boek. Wordt getoond als vm.showForm 'true' is
 		via bovenstaande knop -->
-	<div ng-show="vm.formVisible">
-		<h3>{{ vm.result }}</h3>
+	<div ng-show="formVisible">
+		<h3>{{ result }}</h3>
 
-		<h2>Boek toevoegen</h2>
-		<label for="titel">Titel</label>
-		<input type="text" ng-model="vm.titel" id="titel" name="titel" class="form-control" placeholder="Titel" required
+		<h2>New Book:</h2>
+		<label for="titel">Title</label>
+		<input type="text" ng-model="newObject.titel" id="titel" name="titel" class="form-control" placeholder="Titel" required
 			   autofocus>
 
-		<label for="auteur">Auteur</label>
-		<input type="text" ng-model="vm.auteur" id="auteur" name="auteur" class="form-control" placeholder="Auteur"
+		<label for="auteur">Author</label>
+		<input type="text" ng-model="newObject.auteur" id="auteur" name="auteur" class="form-control" placeholder="Auteur"
 			   required>
 		<label for="isbn">ISBN</label>
-		<input type="text" ng-model="vm.isbn" id="isbn" name="isbn" class="form-control" placeholder="ISBN" required>
-		<button class="btn btn-lg btn-primary btn-block" ng-click="vm.addBook()">Toevoegen</button>
+		<input type="text" ng-model="newObject.isbn" id="isbn" name="isbn" class="form-control" placeholder="ISBN" required>
+		<button class="btn btn-md btn-success" ng-click="addObject()">Toevoegen</button>
 
 	</div>
-	
-	<div id="footerDiv" ><span>Boeken Express, v. {{vm.version}}</span></div>
-</div>
-<!-- HIER: alles Quick & Dirty in één bestand geplaatst: in werkelijkheid
-	dit liever modulair opzetten met meerdere .js-bestanden -->
-<script src="js/lib/angular/angular.min.js"></script>
-<script>
-	(function () {
-		'use strict';
-
-		angular.module('myApp', [])
-				.controller('boekController', boekController);
-
-		boekController.$inject = ['$http', '$timeout']; // minify safe
-		function boekController($http, $timeout) {
-			// 0. Initialisaties
-			var vm = this,
-					url = '../api/boeken';
-			vm.formVisible = false;
-			vm.result = '';
-
-			// 0. Version ophalen.
-			$http({
-				method: 'get',
-				url   : '../version'
-			}).then(function (version) {
-				vm.version = version.data;
-			}).catch(function (err) {
-				alert(url + 'Error: er is een fout opgetreden ' + JSON.stringify(err));
-			});
-
-			// 1. Boeken ophalen.
-			$http({
-				method: 'get',
-				url   : url
-			}).then(function (boeken) {
-				vm.boeken = boeken.data;
-			}).catch(function (err) {
-				alert(url + 'Error: er is een fout opgetreden ' + JSON.stringify(err));
-			});
-
-			// 2. Formulier zichtbaar maken
-			vm.showForm = function () {
-				vm.formVisible = !vm.formVisible;
-			};
-			// 3. Boek toevoegen
-			vm.addBook = function () {
-				$http({
-					method: 'post',
-					url   : url,
-					data  : {
-						titel : vm.titel,
-						auteur: vm.auteur,
-						isbn  : vm.isbn
-					}
-				}).then(function (newBook) {
-					vm.boeken.push(newBook.data);
-					vm.result = 'Boek toegevoegd!';
-					$timeout(function () {
-						// reset velden
-						vm.formVisible = false;
-						vm.result = '';
-						vm.titel = vm.auteur = vm.isbn = '';
-					}, 1500)
-				}).catch(function (err) {
-					alert('Error: er is een fout opgetreden ' + err);
-				});
-			};
-
-			// 4. Boek verwijderen
-			vm.deleteBook = function (book) {
-				if (confirm(book.titel + ' wordt verwijderd. Weet u het zeker?')) {
-					$http({
-						method: 'delete',
-						url   : url + '/' + book._id
-					}).then(function (removed) {
-						vm.boeken.forEach(function(huidigBoek, index){
-							if(huidigBoek._id === book._id){
-								vm.boeken.splice(index, 1);
-							}
-						});
-					}).catch(function (err) {
-						alert('Error: er is een fout opgetreden ' + err);
-					});
-				}
-			};
-		}
-	})();
-</script>
-</body>
-</html>

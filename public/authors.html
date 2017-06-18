@@ -1,148 +1,39 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-	<meta charset="UTF-8">
-	<title>Boeken Express</title>
-	<link rel="stylesheet" href="js/lib/bootstrap/dist/css/bootstrap.min.css"/>
-	<style type="text/css">
-	#footerDiv {
-		position: fixed;
-		bottom: 0;
-	}
-	</style>
-</head>
-<body ng-app="myApp">
-<div class="container" ng-controller="auteurController as vm">
-	<h1>De Boeken Express - Auteurs</h1>
-	
-	<a href="/">Home</a>
+    <div ng-include src="'genericPageTitle.html'"></div>
 
 	<table class="table table-striped">
+
 		<tr>
-			<th>Achternaam</th>
-			<th>Voornamen</th>
-			<th>Specialiteit</th>
+			<th>Family name</th>
+			<th>Fist names</th>
+			<th>Topics</th>
 			<th></th>
 		</tr>
-		<tr ng-repeat="auteur in vm.auteurs">
+		<tr ng-repeat="auteur in data">
 			<td>{{auteur.achternaam}}</td>
 			<td>{{auteur.voornaam}}, {{auteur.tussenvoegsel}}</td>
 			<td>{{auteur.specialiteit}}</td>
 			<td>
-				<button ng-click="vm.deleteAuteur(auteur)" class="btn btn-danger">Verwijderen</button>
+				<button ng-click="deleteObject(auteur)" class="btn btn-danger">Delete</button>
 			</td>
 		</tr>
 	</table>
 	<p>
-		<button ng-click="vm.showForm()" class="btn btn-lg btn-primary">Auteur toevoegen</button>
+		<button ng-click="showForm()" class="btn btn-md btn-success">Add Author</button>
 	</p>
 	<!-- formulier voor toevoegen van boek. Wordt getoond als vm.showForm 'true' is
 		via bovenstaande knop -->
-	<div ng-show="vm.formVisible">
-		<h3>{{ vm.result }}</h3>
+	<div ng-show="formVisible">
+		<h3>{{ result }}</h3>
 
-		<h2>Auteur toevoegen</h2>
-		<label for="achternaam">Achternaam</label>
-		<input type="text" ng-model="vm.achternaam" id="achternaam" name="achternaam" class="form-control" placeholder="Achternaam" required autofocus>
-		<label for="voornaam">Voornaam</label>
-		<input type="text" ng-model="vm.voornaam" id="voornaam" name="voornaam" class="form-control" placeholder="Voornaam">
-		<label for="tussenvoegsel">Tussenvoegsel</label>
-		<input type="text" ng-model="vm.tussenvoegsel" id="tussenvoegsel" name="tussenvoegsel" class="form-control" placeholder="Tussenvoegsel">
-		<label for="specialiteit">Specialiteit</label>
-		<input type="text" ng-model="vm.specialiteit" id="specialiteit" name="specialiteit" class="form-control" placeholder="Specialiteit" required>
-		<button class="btn btn-lg btn-primary btn-block" ng-click="vm.addAuteur()">Toevoegen</button>
+		<h2>Add an Author</h2>
+		<label for="achternaam">Family name</label>
+		<input type="text" ng-model="newObject.achternaam" id="achternaam" name="achternaam" class="form-control" placeholder="Achternaam" required autofocus>
+		<label for="voornaam">First name</label>
+		<input type="text" ng-model="newObject.voornaam" id="voornaam" name="voornaam" class="form-control" placeholder="Voornaam">
+		<label for="tussenvoegsel">Preposition</label>
+		<input type="text" ng-model="newObject.tussenvoegsel" id="tussenvoegsel" name="tussenvoegsel" class="form-control" placeholder="Tussenvoegsel">
+		<label for="specialiteit">Topics</label>
+		<input type="text" ng-model="newObject.specialiteit" id="specialiteit" name="specialiteit" class="form-control" placeholder="Specialiteit" required>
+		<button class="btn btn-md btn-success" ng-click="addObject()">Submit</button>
 
 	</div>
-	
-	<div id="footerDiv" ><span>Boeken Express, v. {{vm.version}}</span></div>
-</div>
-<!-- HIER: alles Quick & Dirty in één bestand geplaatst: in werkelijkheid
-	dit liever modulair opzetten met meerdere .js-bestanden -->
-<script src="js/lib/angular/angular.min.js"></script>
-<script>
-	(function () {
-		'use strict';
-
-		angular.module('myApp', [])
-				.controller('auteurController', auteurController);
-
-		boekController.$inject = ['$http', '$timeout']; // minify safe
-		function auteurController($http, $timeout) {
-			// 0. Initialisaties
-			var vm = this,
-					url = '../api/auteurs';
-			vm.formVisible = false;
-			vm.result = '';
-
-			// 0. Version ophalen.
-			$http({
-				method: 'get',
-				url   : '../version'
-			}).then(function (version) {
-				vm.version = version.data;
-			}).catch(function (err) {
-				alert(url + 'Error: er is een fout opgetreden ' + JSON.stringify(err));
-			});
-
-			// 1. Auteurs ophalen.
-			$http({
-				method: 'get',
-				url   : url
-			}).then(function (auteurs) {
-				vm.auteurs = auteurs.data;
-			}).catch(function (err) {
-				alert(url + 'Error: er is een fout opgetreden ' + JSON.stringify(err));
-			});
-
-			// 2. Formulier zichtbaar maken
-			vm.showForm = function () {
-				vm.formVisible = !vm.formVisible;
-			};
-			
-			// 3. Auteur toevoegen
-			vm.addAuteur = function () {
-				$http({
-					method: 'post',
-					url   : '../api/auteurs',
-					data  : {
-						achternaam : vm.achternaam,
-						voornaam: vm.voornaam,
-						tussenvoegsel  : vm.tussenvoegsel,
-						specialiteit  : vm.specialiteit
-					}
-				}).then(function (newAuthor) {
-					vm.auteurs.push(newAuthor.data);
-					vm.result = 'Auteur toegevoegd!';
-					$timeout(function () {
-						// reset velden
-						vm.formVisible = false;
-						vm.result = '';
-						vm.achternaam = vm.voornaam = vm.tussenvoegsel = vm.specialiteit = '';
-					}, 1500)
-				}).catch(function (err) {
-					alert('Error: er is een fout opgetreden ' + err);
-				});
-			};
-
-			// 4. Auteur verwijderen
-			vm.deleteAuteur = function (auteur) {
-				if (confirm(auteur.achternaam + ' wordt verwijderd. Weet u het zeker?')) {
-					$http({
-						method: 'delete',
-						url   : '../api/auteurs/' + auteur._id
-					}).then(function (removed) {
-						vm.auteurs.forEach(function(huidigeAuteur, index){
-							if(huidigeAuteur._id === auteur._id){
-								vm.auteurs.splice(index, 1);
-							}
-						});
-					}).catch(function (err) {
-						alert('Error: er is een fout opgetreden ' + err);
-					});
-				}
-			};
-		}
-	})();
-</script>
-</body>
-</html>
