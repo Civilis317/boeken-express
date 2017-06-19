@@ -13,8 +13,12 @@ booksExpressApp.controller('contentController', function($scope, $location, $rou
 	// implementing page
 	$scope.implementingPage = $routeParams.contentType + '.html'
 	
-	// call rest service to get page object
-	var url = '../api/' + $routeParams.contentType;
+	// setup base url
+	var baseUrl = '../api/';
+	if ($routeParams.secret) {
+		baseUrl = '../secure-api/';
+	}
+	var url = baseUrl + $routeParams.contentType;
 	
 	// provide function and object
 	$scope.createNewObject = function() {

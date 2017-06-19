@@ -5,11 +5,15 @@
 var jwt = require('jsonwebtoken');
 
 module.exports.authenticate = function (request, response) {
-	// create user object
+	// construct user object
 	var user = {
-			username: "johnDoe",
-			email: "john.doe@acme.com"
+			username: "",
+			pwd: ""
 	}
+	
+    user.username = request.body.username;
+    user.pwd = request.body.pwd;
+	console.log(JSON.stringify(user));
 	
 	// define expiration 
 	var expiration = {
@@ -20,10 +24,28 @@ module.exports.authenticate = function (request, response) {
 	var token = jwt.sign(user, process.env.SECRET_KEY, expiration);
 	
 	// create response:
+	response.cookie('token',token,{ httpOnly: true });
+//	response.cookie('x-test-5','httpOnly and secure',{ httpOnly: true, secure: true });
 	response.json({
-		success: true,
-		token: token
+		success: true
 	});
 	
 }
- 
+
+module.exports.verifyToken = function(request, response, next) {
+	var token = request.cookies['token'];
+	console.log('token: ' + token)
+
+	if (!token) {
+		response.status(403).send("please provide a token");
+	} else {
+		jwt.verify(token, process.env.SECRET_KEY, function(err, decode) {
+			if (err) {
+				response.status(500).send("Invalid Token");
+			} else {
+				console.log("token verified")
+				next();
+			}
+		});
+	}
+}

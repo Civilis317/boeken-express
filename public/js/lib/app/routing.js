@@ -12,5 +12,13 @@ booksExpressApp.config([ '$routeProvider', function($routeProvider) {
 		templateUrl : 'implementingPageContainer.html',
 		controller : 'contentController'
 			
+	}).when('/content/:contentType/:secret', {
+		templateUrl : 'implementingPageContainer.html',
+		controller : 'contentController'
+			
+	}).when('/login', {
+		templateUrl : 'login.html',
+		controller : 'loginController'
+			
 	});
 } ]);

@@ -1,26 +1,18 @@
-<!DOCTYPE html>
-<html>
-<div class="form-container">
-    <h2>Login</h2>
-    <% if(locals.error) { %>
-        <div class="alert alert-danger"><%= error %></div>
-    <% } %>
-    <% if(locals.success) { %>
-        <div class="alert alert-success"><%= success %></div>
-    <% } %>
-    <form method="post">
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" name="username" id="username" value="<%= locals.username || '' %>" class="form-control" />
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" class="form-control" />
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">Login</button>
-            <a href="/register" class="btn btn-link">Register</a>
-        </div>
-    </form>
+    <div ng-include src="'genericPageTitle.html'"></div>
+<div style="width: 40%">
+     <div class="form-group">
+         <label for="username">Username</label>
+         <input type="text" name="username" id="username" ng_model="newUser.username" class="form-control" required autofocus/>
+     </div>
+     <div class="form-group">
+         <label for="password">Password</label>
+         <input type="password" name="password" id="password" ng_model="newUser.pwd" class="form-control" />
+     </div>
+     <div class="form-group">
+         <button class="btn btn-md btn-primary" ng-click="performLogin()">Login</button>
+         <a href="/register" class="btn btn-link">Register</a>
+     </div>
 </div>
-</html>
+<script languague="javascript">
+document.getELementById("username").focus();
+</script>

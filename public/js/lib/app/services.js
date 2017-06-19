@@ -84,7 +84,7 @@ if (!Array.prototype.find) {
   };
 }
 
-booksExpressApp.factory('httpService', function($q, $http, alertService) {
+booksExpressApp.factory('httpService', function($q, $http, $location, $window, alertService) {
 	var get = function(url, config, alerts) {
 		var result;
 		var deferred = $q.defer();
@@ -100,7 +100,11 @@ booksExpressApp.factory('httpService', function($q, $http, alertService) {
 		}).error(function(data, status, headers) {
 				
 			if (status == 403) {
-				alertService.addErrorAlert('Not authorized', $scope.alerts);
+				//alertService.addErrorAlert('Not authorized', $scope.alerts);
+				console.log('Forbidden for Authentication, please log in')
+				$window.location.href = "main.html#/login";
+				return $q.reject();
+				
 			} else {
 				if ('text/plain' == headers('Content-Type').substring(0, 10)) {
 					alertService.addErrorAlert(data, alerts);

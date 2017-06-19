@@ -4,8 +4,8 @@
 
 // imports - npm
 var express = require('express');
-var session = require('express-session');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser')
 var readYaml = require('read-yaml');
 var jwt = require('jsonwebtoken');
 
@@ -15,6 +15,7 @@ var authorController = require('./controllers/author-controller');
 var authenticateController = require('./controllers/authenticate-controller');
 
 // public api
+//app.use(cookieParser());
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -32,37 +33,18 @@ app.use("/", express.static(__dirname + '/public'));
 
 // secure api
 process.env.SECRET_KEY = '033a0dc6-49e4-11e7-a919-92ebcb67fe33';
-app.use(session({ secret: process.env.SECRET_KEY, resave: false, saveUninitialized: true }));
-
-app.set('view engine', 'ejs');
-app.set('views', __dirname + '/views');
-
 var secureRoutes = express.Router();
 secureRoutes.use(bodyParser.json());
 secureRoutes.use(bodyParser.urlencoded({
 	extended : true
 }));
+secureRoutes.use(cookieParser());
 
 // define context of secure api
 app.use('/secure-api', secureRoutes);
 
 // validation middleware:
-secureRoutes.use(function(req, res, next) {
-	var token = req.body.token || req.headers['token'];
-
-	if (!token) {
-		res.send("please provide a token");
-	} else {
-		jwt.verify(token, process.env.SECRET_KEY, function(err, decode) {
-			if (err) {
-				res.status(500).send("Invalid Token");
-			} else {
-				console.log("token verified")
-				next();
-			}
-		});
-	}
-});
+secureRoutes.use(authenticateController.verifyToken);
 
 // call to get instruction
 app.get('/api', function(req, res) {
@@ -102,27 +84,12 @@ app.get("/version", function(request, response) {
 });
 
 app.get("/api/menu", function(request, response) {
-	var result = { "menu": [{ "url": "/content/books", "name": "Books" }, { "url": "/content/authors", "name": "Authors" }]};
+	var result = { "menu": [{ "url": "/content/books", "name": "Books" }, { "url": "/content/authors", "name": "Authors" }, { "url": "/content/books/true", "name": "Secrets" }]};
 	response.json(result);
 });
 
-app.get("/login", function(request, response) {
-	//response.json("should login");
-    
-	// log user out
-    delete request.session.token;
-
-    // move success message into local variable so it only appears once (single read)
-    var viewData = { success: request.session.success };
-    delete request.session.success;
-
-    response.render('login', viewData);
-    //response.json("should login");
-});
-
-
 // call to get a jwt token
-app.get("/api/authenticate", authenticateController.authenticate);
+app.post("/api/authenticate", authenticateController.authenticate);
 
 // Config Book endpoints
 app.get('/api/books', bookController.findAll);
@@ -135,33 +102,7 @@ app.post('/api/authors', authorController.upsert);
 app.delete('/api/authors/:id', authorController.remove);
 
 // Secure api calls
-secureRoutes.get('/boeken', function(req, res, next) {
-	Boek.find(function(err, boeken) {
-		if (err) {
-			return next(err);
-		}
-		res.json(boeken);
-	})
-});
-
-secureRoutes.post('/boeken', function(req, res, next) {
-	// 2a. nieuw boekobject maken.
-	var boek = new Boek({
-		titel : req.body.titel,
-		auteur : req.body.auteur,
-		ISBN : req.body.isbn
-	});
-
-	// 2b. Opslaan in database.
-	boek.save(function(err, boek) {
-		// indien error: teruggeven
-		if (err) {
-			return next(err);
-		}
-		// indien OK: status 201 (Created) en boekobject teruggeven
-		res.status(201).json(boek);
-	})
-});
+secureRoutes.get('/books', bookController.findAll);
 
 
 // Server startup
