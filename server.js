@@ -22,8 +22,6 @@ app.use(bodyParser.urlencoded({
 	extended : true
 }));
 
-
-
 // some special stuff for Heroku deployment:
 app.set('port', (process.env.PORT || 5000));
 app.set('config', (process.env.CONFIG_PATH || 'application.yml'));
@@ -57,29 +55,6 @@ app.get('/api', function(req, res) {
 var config = readYaml.sync(app.get('config'));
 var version = config.application.version;
 app.get("/version", function(request, response) {
-//	
-//	if (!request.session.token) {
-//        return response.redirect('/login?returnUrl=' + encodeURIComponent('/version' + request.path));
-//    }
-	
-//	// what cookies are sent from the browser:
-//	console.log(JSON.stringify(request.headers));
-//	
-//	// or:
-//	for(var item in request.headers) {
-//	    console.log(item + ": " + request.headers[item]);
-//	  }
-//	
-//
-//	// set cookies:
-//	response.cookie('x-test-1','httpOnly',{ httpOnly: true });
-//	response.cookie('x-test-2','not httpOnly',{ httpOnly: false });
-//	response.cookie('x-test-3','no options');
-//	
-//	response.cookie('x-test-4','secure',{ secure: true });
-//	response.cookie('x-test-5','httpOnly and secure',{ httpOnly: true, secure: true });
-
-
 	response.json(version);
 });
 
@@ -103,7 +78,6 @@ app.delete('/api/authors/:id', authorController.remove);
 
 // Secure api calls
 secureRoutes.get('/books', bookController.findAll);
-
 
 // Server startup
 app.listen(app.get('port'), function() {

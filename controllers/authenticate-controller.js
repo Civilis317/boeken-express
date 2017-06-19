@@ -22,10 +22,12 @@ module.exports.authenticate = function (request, response) {
 	
 	// create token
 	var token = jwt.sign(user, process.env.SECRET_KEY, expiration);
-	
-	// create response:
+
+	// add token to cookie httpOnly = not accessible by browser-javascript, secure=cookie will only be sent over https
 	response.cookie('token',token,{ httpOnly: true });
 //	response.cookie('x-test-5','httpOnly and secure',{ httpOnly: true, secure: true });
+
+	// create response:
 	response.json({
 		success: true
 	});
