@@ -10,8 +10,18 @@ booksExpressApp.controller('contentController', function($scope, $location, $rou
 	// page title
 	$scope.pageTitle = $routeParams.contentType;
 	
+	// menu
+	httpService.get('../api/menu', null, $scope.alerts).then(function(data){
+		$scope.menu = data.menu;
+	});
+	
+	// is menuItem the current menuItem?
+	$scope.isActive = function (menuItem) { 
+        return menuItem.url === $location.path();
+    };
+	
 	// implementing page
-	$scope.implementingPage = $routeParams.contentType + '.html'
+	$scope.implementingPage = $routeParams.contentType + '.html';
 	
 	// setup base url
 	var baseUrl = '../api/';

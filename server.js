@@ -59,7 +59,11 @@ app.get("/version", function(request, response) {
 });
 
 app.get("/api/menu", function(request, response) {
-	var result = { "menu": [{ "url": "/content/books", "name": "Books" }, { "url": "/content/authors", "name": "Authors" }, { "url": "/content/books/true", "name": "Secrets" }]};
+	var result = { "menu": [{ "url": "/content/books", "name": "Books" }
+	, { "url": "/content/authors", "name": "Authors" }
+	, { "url": "/content/books/true", "name": "Secrets" }
+	, { "url": "/logout", "name": "Logout" }]
+	};
 	response.json(result);
 });
 
@@ -78,6 +82,7 @@ app.delete('/api/authors/:id', authorController.remove);
 
 // Secure api calls
 secureRoutes.get('/books', bookController.findAll);
+secureRoutes.get('/logout', authenticateController.logout);
 
 // Server startup
 app.listen(app.get('port'), function() {

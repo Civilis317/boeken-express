@@ -102,7 +102,9 @@ booksExpressApp.factory('httpService', function($q, $http, $location, $window, a
 			if (status == 403) {
 				//alertService.addErrorAlert('Not authorized', $scope.alerts);
 				console.log('Forbidden for Authentication, please log in')
-				$window.location.href = "main.html#/login";
+				
+				// change route to login with original route as returnUrl as queryParam
+				$location.url('/login?returnUrl=' + encodeURIComponent($location.path()));
 				return $q.reject();
 				
 			} else {

@@ -4,9 +4,9 @@ var booksExpressApp = angular.module('booksExpress');
 // Define Routing for app
 booksExpressApp.config([ '$routeProvider', function($routeProvider) {
 	
-	$routeProvider.when('/menu', {
-		templateUrl : 'menu.html',
-		controller : 'menuController'
+	$routeProvider.when('/welcome', {
+		templateUrl : 'welcome.html',
+		controller : 'welcomeController'
 			
 	}).when('/content/:contentType', {
 		templateUrl : 'implementingPageContainer.html',
@@ -17,8 +17,12 @@ booksExpressApp.config([ '$routeProvider', function($routeProvider) {
 		controller : 'contentController'
 			
 	}).when('/login', {
-		templateUrl : 'login.html',
+		templateUrl : 'implementingPageContainer.html',
 		controller : 'loginController'
+			
+	}).when('/logout', {
+		templateUrl : 'welcome.html',
+		controller : 'welcomeController'
 			
 	});
 } ]);
