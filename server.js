@@ -69,6 +69,8 @@ app.get("/api/menu", function(request, response) {
 
 // call to get a jwt token
 app.post("/api/authenticate", authenticateController.authenticate);
+app.get('/api/getEmptyUser', authenticateController.getUser);
+app.post('/api/register', authenticateController.register);
 
 // Config Book endpoints
 app.get('/api/books', bookController.findAll);

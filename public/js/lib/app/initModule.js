@@ -1,2 +1,2 @@
 //Define an angular module for the app
-angular.module('booksExpress', [ 'ngRoute']);
+angular.module('booksExpress', [ 'ngRoute', 'ui.bootstrap']);

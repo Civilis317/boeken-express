@@ -1,0 +1,21 @@
+
+<div style="width: 40%">
+     <div class="form-group">
+         <label for="displayname">Displayname</label>
+         <input type="text" name="displayname" id="displayname" ng_model="newUser.displayname" class="form-control" required autofocus/>
+     </div>
+     <div class="form-group">
+         <label for="username">Username</label>
+         <input type="text" name="username" id="username" ng_model="newUser.username" class="form-control" required />
+     </div>
+     <div class="form-group">
+         <label for="password">Password</label>
+         <input type="password" name="password" id="password" ng_model="newUser.pwdhash" class="form-control" />
+     </div>
+     <div class="form-group">
+         <button class="btn btn-md btn-primary" ng-click="performRegistration()">Register</button>
+     </div>
+</div>
+<script languague="javascript">
+document.getELementById("username").focus();
+</script>

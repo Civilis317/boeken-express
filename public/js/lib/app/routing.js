@@ -16,6 +16,10 @@ booksExpressApp.config([ '$routeProvider', function($routeProvider) {
 		templateUrl : 'implementingPageContainer.html',
 		controller : 'contentController'
 			
+	}).when('/register', {
+		templateUrl : 'implementingPageContainer.html',
+		controller : 'loginController'
+			
 	}).when('/login', {
 		templateUrl : 'implementingPageContainer.html',
 		controller : 'loginController'

@@ -125,7 +125,7 @@ booksExpressApp.factory('httpService', function($q, $http, $location, $window, a
 	var call = function(url, data, alerts) {
 		var result;
 		var deferred = $q.defer();
-			
+		
 		$http.post(url, data).success(function(res, status, headers) {
 			if ('text/html' == headers('Content-Type')) {
 				alertService.addErrorAlert('Timeout in communicatie met webserver.', alerts);
@@ -135,13 +135,13 @@ booksExpressApp.factory('httpService', function($q, $http, $location, $window, a
 			}
 		}).error(function(data, status, headers) {
 			if (status == 403) {
-				alertService.addErrorAlert('U bent niet geautoriseerd voor deze functie.', $scope.alerts);
+				//alertService.addErrorAlert('U bent niet geautoriseerd voor deze functie.', $scope.alerts);
+				alertService.addErrorAlert(data, alerts);
 			} else {
 				if ('text/plain' == headers('Content-Type').substring(0, 10)) {
 					alertService.addErrorAlert(data, alerts);
 				} else {
 					alertService.addErrorAlert('Er is een onverwachte fout opgetreden.', alerts);
-					
 				}
 			}
 			
