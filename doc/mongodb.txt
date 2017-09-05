@@ -1,0 +1,31 @@
+Mongodb authentication
+======================
+
+In the dev db 2 users are created in the admin db:
+super user:
+use admin
+db.createUser({user:"root-admin", pwd:"P0mp311",roles:["root"]})
+
+books-express user:
+use admin
+db.createUser({user:"books-express", pwd:"welcome1",roles:[{ role: "readWrite", db: "boeken" },{role: "dbAdmin", db: "boeken"}]})
+
+To log in to a mongo-shell and list all documents in the "boeks" collection of db "boeken":
+mongo
+use admin
+db.auth("books-express", "welcome1")
+use boeken
+db.boeks.find()
+
+To start mongo db with and without authentication:
+mongod --auth --config /Users/civilis/Projects/mongodb/mongod.conf
+mongod --config /Users/civilis/Projects/mongodb/mongod.conf
+
+Show all databases:
+show dbs
+
+Show all collections in a db:
+show collections
+
+
+

@@ -112,7 +112,6 @@ booksExpressApp.factory('httpService', function($q, $http, $location, $window, a
 					alertService.addErrorAlert(data, alerts);
 				} else {
 					alertService.addErrorAlert('Unanticipated error', alerts);
-					
 				}
 			}
 			

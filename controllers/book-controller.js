@@ -8,6 +8,7 @@ var Book = require('../models/boeken');
 module.exports.findAll = function (request, response) {
 	Book.find(function (err, books) {
 		if (err) {
+			console.log(err)
 			return next(err);
 		}
 		response.json(books);
